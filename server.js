@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 8080;
 // Enable CORS with preflight support
 app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:5173', 'https://mercycermy.github.io'];
+    const allowedOrigins = ['https://empirepharmacyplc.com/'];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
