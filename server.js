@@ -1,11 +1,14 @@
 import express from 'express';
 import multer from 'multer';
 import nodemailer from 'nodemailer';
-import { USER, PASSWORD, SENDER, RECEIVER } from './config/key.js'; // Add RECEIVER in keys.js for the admin's email
+import dotenv from 'dotenv';  // Import dotenv to load environment variables
 import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
+
+// Initialize dotenv to load variables from .env file
+dotenv.config();
 
 // Define __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +43,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
+
 const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 },
@@ -61,8 +65,8 @@ const transporter = nodemailer.createTransport({
   secure: false,
   requireTLS: true,
   auth: {
-    user: USER,
-    pass: PASSWORD,
+    user: process.env.USER,
+    pass: process.env.PASSWORD,
   },
 });
 
@@ -82,8 +86,8 @@ app.post('/send', upload.single('image'), (req, res) => {
   }
 
   const mailOptions = {
-    from: `${SENDER} 🐶`,
-    to: RECEIVER,
+    from: `${process.env.SENDER} 🐶`,
+    to: process.env.RECEIVER,
     subject: 'Contact Form Submission 🌟',
     html: `
       <b style='color:red;'>Contact Form Submission</b><br />
