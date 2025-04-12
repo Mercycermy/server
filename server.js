@@ -19,20 +19,14 @@ const PORT = process.env.PORT || 8080;
 
 // Enable CORS with preflight support
 app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = ['https://empirepharmacyplc.com/', 'http://localhost:5173'];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*',  // Allows all origins
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   preflightContinue: false,
   optionsSuccessStatus: 200,
 }));
+
 
 // Set up multer for file upload
 const storage = multer.diskStorage({
